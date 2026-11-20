@@ -25,6 +25,7 @@ a { color: var(--accent); }
 header.top { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
 header.top h1 { font-size: 22px; margin: 0; }
 header.top h1 a { color: inherit; text-decoration: none; }
+header.top form { margin: 0; }
 nav.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
 nav.tabs a {
   padding: 6px 14px; border-radius: 999px; text-decoration: none;
@@ -91,7 +92,7 @@ def _layout(title, body, refresh=False):
 <style>{CSS}</style>
 </head>
 <body><div class="wrap">
-<header class="top"><h1><a href="/">📚 Wticzka</a></h1></header>
+<header class="top"><h1><a href="/">📚 Wticzka</a></h1><form method="post" action="/hn"><button title="Pobierz teraz top z Hacker News">↻ HN</button></form></header>
 {body}
 </div></body>
 </html>"""

@@ -56,9 +56,8 @@ class Handler(BaseHTTPRequestHandler):
             return self._receive_page()
         if path == "/add":
             return self._add_url()
-        if path == "/hn":  # ręczne odpalenie: curl -X POST http://HOST:PORT/hn
-            added = hn.fetch_top()
-            return self._send(200, "application/json", json.dumps({"ok": True, "added": added}).encode())
+        if path == "/hn":
+            return self._fetch_hn()
 
         if m := ARTICLE_ACTION.match(path):
             article_id, action = int(m[1]), m[2]
@@ -111,6 +110,20 @@ class Handler(BaseHTTPRequestHandler):
         if is_json:
             return self._send(200, "application/json", json.dumps({"ok": True, "id": article_id}).encode())
         self._redirect(f"/article/{article_id}")
+
+    def _fetch_hn(self):
+        """Cron (curl -X POST, bez body) dostaje JSON, przycisk w UI (formularz) wraca na listę."""
+        from_form = self.headers.get_content_type() == "application/x-www-form-urlencoded"
+        self._body()
+        try:
+            added = hn.fetch_top()
+        except Exception as err:
+            if from_form:
+                return self._html(templates.error_page(f"Nie udało się pobrać z HN: {err}"), 502)
+            return self._send(502, "application/json", json.dumps({"ok": False, "error": str(err)}).encode())
+        if from_form:
+            return self._redirect("/")
+        self._send(200, "application/json", json.dumps({"ok": True, "added": added}).encode())
 
     def _origin_ok(self):
         origin = self.headers.get("Origin")

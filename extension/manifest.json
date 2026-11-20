@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "Wyślij stronę",
+  "version": "1.2",
+  "description": "Wysyła zawartość aktualnej strony na serwer.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "http://localhost/*",
+    "http://127.0.0.1/*",
+    "http://10.10.10.10/*"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {
+    "default_title": "Wyślij stronę na serwer",
+    "default_icon": "icon.svg"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "wyslij-strone@localhost"
+    }
+  }
+}

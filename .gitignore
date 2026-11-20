@@ -1,0 +1,17 @@
+# sekrety
+creds
+
+# dane serwera
+server/wticzka.db
+server/pages/
+
+# Python
+__pycache__/
+*.pyc
+
+# build wtyczki
+extension/web-ext-artifacts/
+*.xpi
+
+# macOS
+.DS_Store
